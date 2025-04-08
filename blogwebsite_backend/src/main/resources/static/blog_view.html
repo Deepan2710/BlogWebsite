@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Blog View</title>
+</head>
+<body>
+<h1 id="blogTitle"></h1>
+<p id="blogContent"></p>
+<p id="blogWords"></p>
+
+<script>
+    const params = new URLSearchParams(window.location.search);
+    const title = params.get("title");
+
+    fetch(`http://localhost:9090/blogs/${encodeURIComponent(title)}`)
+      .then(response => response.json())
+      .then(blog => {
+        document.getElementById("blogTitle").innerText = blog.title;
+        document.getElementById("blogContent").innerText = blog.content;
+        document.getElementById("blogWords").innerText = `${blog.blog_words} words`;
+      })
+      .catch(err => console.error("Error:", err));
+</script>
+</body>
+</html>
